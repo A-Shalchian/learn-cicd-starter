@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetAPIeySuccess(t *testing.T){
+func TestGetAPIeySuccess(t *testing.T) {
 	headers := http.Header{}
 	headers.Set("Authorization", "ApiKey testapikey123")
 
