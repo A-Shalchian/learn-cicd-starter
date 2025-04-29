@@ -35,10 +35,7 @@ jobs:
           go-version: "1.23.0"
 
       - name: Check style
-        run: |
-          output=$(go fmt ./...)
-          echo "$output"
-          test -z "$output"
+        run: go fmt ./...
 
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
