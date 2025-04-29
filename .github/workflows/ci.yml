@@ -37,6 +37,7 @@ jobs:
       - name: Check style
         run: |
           output=$(go fmt ./...)
+          echo "$output"
           test -z "$output"
 
       - name: Install staticcheck
