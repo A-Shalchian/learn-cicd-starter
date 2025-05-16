@@ -19,3 +19,28 @@ jobs:
 
       - name: build the app
         run: ./scripts/buildprod.sh
+
+      # ──────────────────────────────────────────────────────────────────────────────
+      # Authenticate to GCP
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Install gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: notely-460001
+          version: "latest"
+
+      # ──────────────────────────────────────────────────────────────────────────────
+      # Configure Docker to use gcloud as a credential helper
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
+      # ──────────────────────────────────────────────────────────────────────────────
+      # Build & push your container
+      - name: Build and push Docker image
+        run: |
+          gcloud builds submit . \
+            --tag us-central1-docker.pkg.dev/notely-460001/notely-ar-repo/notely:latest
